@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Travel — meghamsh.b</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/mb3-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/mb3-16.png">
+<link rel="apple-touch-icon" href="/assets/mb3-apple-touch.png">
+<meta name="theme-color" content="#3D0F18">
+<meta name="description" content="Where I've been — cities I've lived in, worked from, or passed through.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0708; --ink:#F4EFEC; --muted:#C3B9B5; --dim:#988C89;
+    --red:#A8332B; --red-bright:#F5392B; --line:rgba(255,255,255,0.10);
+    --card:rgba(30,22,24,0.34);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Schibsted Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color-scheme:dark;}
+  a{color:#E6DED9;text-decoration:none;}
+  a:hover{color:var(--red);}
+  .bg-img{position:fixed;inset:0;z-index:-2;background-image:url('/assets/bg-v8.png');background-size:cover;background-position:center;}
+  .bg-tint{position:fixed;inset:0;z-index:-1;background:radial-gradient(130% 85% at 50% -5%,rgba(10,6,7,0.02),rgba(8,5,6,0.5) 68%);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+
+  header{position:sticky;top:0;z-index:40;background:rgba(12,8,9,0.15);
+    backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-bottom:1px solid rgba(255,255,255,0.08);}
+  nav{max-width:1080px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:22px;}
+  .logo{font-family:'Instrument Serif',serif;font-style:italic;font-size:26px;line-height:1;color:var(--ink);}
+  .nav-links{display:flex;align-items:center;gap:22px;font-size:14px;color:var(--dim);}
+  .nav-links a{color:var(--dim);}
+  .nav-links a.active{color:var(--ink);font-weight:600;}
+  .nav-links a:hover{color:#fff;}
+  .socials{display:flex;align-items:center;gap:14px;color:var(--dim);}
+  .socials a{display:flex;color:var(--dim);} .socials a:hover{color:var(--red-bright);}
+  .spacer{flex:1;}
+
+  .title-sec{padding:64px 0 0;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:#F0E7E2;}
+  h1{margin:8px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:64px;line-height:1;letter-spacing:-0.01em;color:#F7F1EC;}
+  .subtitle{margin:22px 0 0;max-width:620px;font-size:19px;line-height:1.6;color:var(--muted);text-wrap:pretty;text-shadow:0 1px 10px rgba(0,0,0,0.5);}
+
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin:40px 0 0;}
+  .stat{flex:1;min-width:150px;border:1px solid var(--line);border-radius:16px;padding:22px 24px;
+    background:var(--card);backdrop-filter:blur(3px);}
+  .stat .n{font-family:'Instrument Serif',serif;font-size:46px;line-height:1;color:#F7F1EC;}
+  .stat .l{margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);}
+
+  .globe-sec{margin:44px 0 0;display:flex;flex-direction:column;align-items:center;}
+  .globe-hint{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);margin:0 0 14px;text-align:center;}
+  #globe-holder{width:100%;max-width:540px;aspect-ratio:1/1;position:relative;touch-action:none;}
+  #globe{width:100%;height:100%;display:block;cursor:grab;}
+  #globe:active{cursor:grabbing;}
+  #globe-tip{position:absolute;pointer-events:none;transform:translate(-50%,-140%);
+    background:rgba(12,8,9,0.9);border:1px solid var(--line);border-radius:8px;padding:6px 10px;
+    font-size:12px;color:var(--ink);white-space:nowrap;opacity:0;transition:opacity .15s;}
+
+  .timeline{margin:60px 0 0;}
+  .tl-head{font-family:'Instrument Serif',serif;font-style:italic;font-size:32px;color:#F7F1EC;margin:0 0 8px;}
+  .year-block{border-top:1px solid var(--line);padding:26px 0 6px;}
+  .year-label{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;letter-spacing:0.14em;color:var(--red-bright);margin-bottom:14px;}
+  .entry{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:16px;padding:12px 12px;border-radius:12px;cursor:pointer;transition:background .2s;}
+  .entry:hover,.entry.active{background:rgba(255,255,255,0.05);}
+  .entry .city{font-size:19px;font-weight:600;color:#F4EFEC;}
+  .entry .country{font-size:14px;color:var(--muted);}
+  .entry .when{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);text-align:right;}
+  .entry.active .city{color:var(--red-bright);}
+
+  footer{margin:64px 0 48px;border-top:1px solid var(--line);padding-top:20px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--dim);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  footer a{color:var(--dim);}footer a:hover{color:var(--red-bright);}
+
+  @media (max-width:720px){
+    html,body{overflow-x:hidden;}
+    nav{padding:12px 16px;gap:12px;}
+    .nav-links{display:none;}
+    h1{font-size:40px;}
+    .subtitle{font-size:17px;}
+    .stat .n{font-size:36px;}
+    .wrap{padding:0 16px;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-img" aria-hidden="true"></div>
+<div class="bg-tint" aria-hidden="true"></div>
+
+<header>
+  <nav>
+    <a href="/" class="logo">mb</a>
+    <div class="spacer"></div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/travel" class="active">Travel</a>
+    </div>
+    <div class="socials">
+      <a href="https://github.com/meghamshb2006" target="_blank" rel="noreferrer" aria-label="GitHub"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+      <a href="https://www.linkedin.com/in/meghamshbalantrapu/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.6 5.9H.9V15h2.7V5.9ZM2.25 1a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2ZM15 15h-2.7v-4.9c0-1.23-.44-2.07-1.54-2.07-.84 0-1.34.57-1.56 1.12-.08.2-.1.47-.1.75V15H6.4s.04-8.28 0-9.1h2.7v1.29c.36-.56 1-1.35 2.45-1.35 1.79 0 3.45 1.17 3.45 3.68V15Z"/></svg></a>
+      <a href="mailto:balantrapumeghamsh@gmail.com" aria-label="Email"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.2" y="3" width="13.6" height="10" rx="2"/><path d="m1.8 4.2 6.2 4.6 6.2-4.6"/></svg></a>
+      <a href="https://www.instagram.com/meghamshb/" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" aria-hidden="true"><rect x="1.6" y="1.6" width="12.8" height="12.8" rx="4"/><circle cx="8" cy="8" r="3.1"/><circle cx="11.9" cy="4.1" r="0.85" fill="currentColor" stroke="none"/></svg></a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="title-sec">
+    <div class="eyebrow">05 &middot; Travel</div>
+    <h1>Where I've Been</h1>
+    <p class="subtitle">Every city I've lived in, worked from, or passed through. Drag the globe, or pick a place below to fly to it.</p>
+  </section>
+
+  <section class="stats" id="stats" aria-label="Travel statistics"></section>
+
+  <section class="globe-sec">
+    <p class="globe-hint">Drag to spin &middot; tap a place to fly there</p>
+    <div id="globe-holder">
+      <canvas id="globe"></canvas>
+      <div id="globe-tip"></div>
+    </div>
+  </section>
+
+  <section class="timeline">
+    <div class="tl-head">The log</div>
+    <div id="timeline"></div>
+  </section>
+
+  <footer>
+    <span id="last-updated">Last updated —</span>
+    <span><a href="/">&larr; back to meghamsh.b</a></span>
+  </footer>
+</main>
+
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script>
+/* ============================================================
+   EDIT YOUR TRAVEL HERE.
+   Add/remove entries. Each place needs: city, country, lat, lng,
+   and date "YYYY-MM". The stats, globe pins and the log below all
+   read from this one list.
+   ============================================================ */
+const PLACES = [
+  { city:"Hong Kong",  country:"Hong Kong", lat:22.3193, lng:114.1694, date:"2025-08", note:"Studying CE at HKU" },
+  { city:"Jammu",      country:"India",     lat:32.7266, lng:74.8570,  date:"2024-06", note:"Research @ IIT Jammu" },
+  { city:"Bengaluru",  country:"India",     lat:12.9716, lng:77.5946,  date:"2023-06", note:"Research @ IISc" },
+  { city:"Hyderabad",  country:"India",     lat:17.3850, lng:78.4867,  date:"2006-01", note:"Home base" },
+];
+const LAST_UPDATED = "2026-09-10";
+
+/* ---------- derived: stats + timeline ---------- */
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDate(d){const [y,m]=d.split("-");return `${MONTHS[(+m||1)-1]} ${y}`;}
+const cities = new Set(PLACES.map(p=>p.city)).size;
+const countries = new Set(PLACES.map(p=>p.country)).size;
+const visits = PLACES.length;
+
+document.getElementById('stats').innerHTML = [
+  ['Cities', cities],['Countries', countries],['Visits', visits]
+].map(([l,n])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+document.getElementById('last-updated').textContent = `Last updated ${LAST_UPDATED}`;
+
+const byYear = {};
+PLACES.forEach((p,i)=>{const y=p.date.split('-')[0];(byYear[y]=byYear[y]||[]).push({...p,_i:i});});
+const years = Object.keys(byYear).sort((a,b)=>b-a);
+document.getElementById('timeline').innerHTML = years.map(y=>`
+  <div class="year-block">
+    <div class="year-label">${y}</div>
+    ${byYear[y].sort((a,b)=>b.date.localeCompare(a.date)).map(p=>`
+      <div class="entry" data-i="${p._i}" role="button" tabindex="0">
+        <div><span class="city">${p.city}</span> &nbsp;<span class="country">${p.country}</span>${p.note?` <span class="country">&middot; ${p.note}</span>`:''}</div>
+        <div class="when">${fmtDate(p.date)}</div>
+      </div>`).join('')}
+  </div>`).join('');
+
+/* ---------- interactive globe (d3 orthographic, canvas) ---------- */
+const holder = document.getElementById('globe-holder');
+const canvas = document.getElementById('globe');
+const ctx = canvas.getContext('2d');
+const tip = document.getElementById('globe-tip');
+let width=540, height=540, dpr=Math.min(window.devicePixelRatio||1, 2);
+let rotate=[-95,-22,0];           // start centred over south/east Asia
+let land=null, borders=null;
+const projection = d3.geoOrthographic().rotate(rotate).clipAngle(90).precision(0.4);
+const path = d3.geoPath(projection, ctx);
+let activeIdx=-1, flying=false, dragging=false, hovering=false;
+
+function resize(){
+  width = holder.clientWidth; height = holder.clientWidth;
+  canvas.width = width*dpr; canvas.height = height*dpr;
+  canvas.style.width=width+'px'; canvas.style.height=height+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  projection.scale(width/2 - 6).translate([width/2,height/2]);
+  draw();
+}
+function visible(p){ // is [lng,lat] on the near hemisphere?
+  const c = projection.rotate();
+  return d3.geoDistance([p.lng,p.lat],[-c[0],-c[1]]) < Math.PI/2 - 0.02;
+}
+function draw(){
+  ctx.clearRect(0,0,width,height);
+  // ocean sphere
+  ctx.beginPath(); path({type:'Sphere'});
+  const g = ctx.createRadialGradient(width*0.4,height*0.35,width*0.08,width/2,height/2,width/2);
+  g.addColorStop(0,'#241014'); g.addColorStop(1,'#120a0c');
+  ctx.fillStyle=g; ctx.fill();
+  ctx.lineWidth=1; ctx.strokeStyle='rgba(168,51,43,0.35)'; ctx.stroke();
+  // graticule
+  ctx.beginPath(); path(d3.geoGraticule10());
+  ctx.lineWidth=0.5; ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.stroke();
+  // land
+  if(land){ ctx.beginPath(); path(land);
+    ctx.fillStyle='#3c1a1f'; ctx.fill();
+    ctx.beginPath(); path(borders);
+    ctx.lineWidth=0.5; ctx.strokeStyle='rgba(255,255,255,0.10)'; ctx.stroke();
+  }
+  // pins
+  PLACES.forEach((p,i)=>{
+    if(!visible(p)) return;
+    const xy = projection([p.lng,p.lat]); if(!xy) return;
+    const active = i===activeIdx;
+    if(active){
+      ctx.beginPath(); ctx.arc(xy[0],xy[1],9,0,2*Math.PI);
+      ctx.fillStyle='rgba(245,57,43,0.22)'; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(xy[0],xy[1],active?4.5:3.2,0,2*Math.PI);
+    ctx.fillStyle=active?'#F5392B':'#D9564A'; ctx.fill();
+    ctx.lineWidth=1; ctx.strokeStyle='rgba(255,240,238,0.85)'; ctx.stroke();
+  });
+}
+
+/* auto-rotate */
+d3.timer(()=>{
+  if(dragging||flying||hovering) return;
+  rotate[0]+=0.14; projection.rotate(rotate); draw();
+});
+
+/* drag to spin */
+let start=null, r0=null;
+function pt(e){const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return[t.clientX-r.left,t.clientY-r.top];}
+function onDown(e){dragging=true;start=pt(e);r0=[...rotate];e.preventDefault();}
+function onMove(e){
+  if(dragging){
+    const p=pt(e);const k=0.4*(540/Math.max(width,1))*(width/540); // ~0.4 deg/px
+    const kk=0.42;
+    rotate[0]=r0[0]+(p[0]-start[0])*kk;
+    rotate[1]=Math.max(-90,Math.min(90, r0[1]-(p[1]-start[1])*kk));
+    projection.rotate(rotate); draw();
+  } else {
+    // hover tooltip for pins
+    const p=pt(e); let found=null;
+    PLACES.forEach(pl=>{ if(!visible(pl))return; const xy=projection([pl.lng,pl.lat]); if(xy&&Math.hypot(xy[0]-p[0],xy[1]-p[1])<9) found=pl; });
+    if(found){hovering=true;tip.style.opacity=1;tip.textContent=`${found.city}, ${found.country}`;const xy=projection([found.lng,found.lat]);tip.style.left=xy[0]+'px';tip.style.top=xy[1]+'px';}
+    else{hovering=false;tip.style.opacity=0;}
+  }
+}
+function onUp(){dragging=false;}
+canvas.addEventListener('mousedown',onDown); window.addEventListener('mousemove',onMove); window.addEventListener('mouseup',onUp);
+canvas.addEventListener('touchstart',onDown,{passive:false}); canvas.addEventListener('touchmove',(e)=>{onMove(e);e.preventDefault();},{passive:false}); canvas.addEventListener('touchend',onUp);
+canvas.addEventListener('mouseleave',()=>{hovering=false;tip.style.opacity=0;});
+
+/* fly to a place */
+function flyTo(i){
+  const p=PLACES[i]; if(!p) return;
+  activeIdx=i;
+  document.querySelectorAll('.entry').forEach(el=>el.classList.toggle('active', +el.dataset.i===i));
+  const target=[-p.lng,-p.lat,0];
+  const iv=d3.interpolate(rotate,target);
+  flying=true;
+  const t0=performance.now(), dur=1100;
+  function step(now){
+    const k=Math.min(1,(now-t0)/dur), e=d3.easeCubicInOut(k);
+    rotate=iv(e); projection.rotate(rotate); draw();
+    if(k<1) requestAnimationFrame(step); else flying=false;
+  }
+  requestAnimationFrame(step);
+}
+document.querySelectorAll('.entry').forEach(el=>{
+  el.addEventListener('click',()=>flyTo(+el.dataset.i));
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flyTo(+el.dataset.i);}});
+});
+canvas.addEventListener('click',e=>{
+  const p=pt(e); let hit=-1;
+  PLACES.forEach((pl,i)=>{ if(!visible(pl))return; const xy=projection([pl.lng,pl.lat]); if(xy&&Math.hypot(xy[0]-p[0],xy[1]-p[1])<10) hit=i; });
+  if(hit>=0) flyTo(hit);
+});
+
+/* load geometry then go */
+fetch('vendor/countries-110m.json').then(r=>r.json()).then(world=>{
+  land = topojson.feature(world, world.objects.countries);
+  borders = topojson.mesh(world, world.objects.countries, (a,b)=>a!==b);
+  resize();
+}).catch(()=>{ resize(); });
+window.addEventListener('resize',resize);
+resize();
+</script>
+</body>
+</html>
